@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "comiple": "npx @alephium/cli@latest compile "
+    "compile": "npx @alephium/cli@latest compile",
+    "deploy": "npx @alephium/cli@latest deploy"
   },
   "keywords": [],
   "author": "",
