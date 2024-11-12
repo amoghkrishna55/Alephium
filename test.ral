@@ -1,0 +1,11 @@
+pub fn test() {
+    println!("Hello, world!");
+}
+
+contract Test {
+    pub fn test() {
+        println!("Hello, world!");
+    }
+}
+
+let a = 4

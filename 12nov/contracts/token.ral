@@ -1,0 +1,26 @@
+import "std/fungible_token_interface"
+
+
+Contract Token (
+    supply: U256,
+    decimals: U256,
+    name: ByteVec,
+    symbol: ByteVec
+) implements IFungibleToken {
+    pub fn getTotalSupply() -> U256 {
+        return supply
+    }
+
+    pub fn getDecimals() -> U256 {
+        return decimals
+    }
+
+    pub fn getName() -> ByteVec {
+        return name
+    }
+
+    pub fn getSymbol() -> ByteVec {
+        return symbol
+    }
+
+}
