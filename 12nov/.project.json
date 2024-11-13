@@ -12,16 +12,16 @@
   },
   "infos": {
     "IFungibleToken": {
-      "sourceFile": "../node_modules/@alephium/web3/std/fungible_token_interface.ral",
+      "sourceFile": "../../../../../../private/tmp/bunx-501-@alephium/cli@latest/node_modules/@alephium/web3/std/fungible_token_interface.ral",
       "sourceCodeHash": "62910bf11e1eeb6cb2fd468626ff606a9b06306b2b81590c3b10f6deb5966bde",
       "bytecodeDebugPatch": "",
       "codeHashDebug": ""
     },
     "Token": {
       "sourceFile": "token.ral",
-      "sourceCodeHash": "b89b01af515e11aa8253d94757fd81f155f3efd89525c56f3c73b66fb275965f",
-      "bytecodeDebugPatch": "",
-      "codeHashDebug": "7a4d24d1145bc3158bd6b27d204be71a2f5b04b1cb4e3d737ed6252923208b0d"
+      "sourceCodeHash": "b9fbe9584bba0414e4dca6ff152ad140b6edbfe936675f006b8861e9641e8e7a",
+      "bytecodeDebugPatch": "=20-2+71=111-1+4=10+a0007e02175468652063757272656e742062616c616e63652069732000=46",
+      "codeHashDebug": "b236af4a65fcb29c9a809222f1e7bdb4f1ec9d3fbd488c61a93b9d6160de40df"
     }
   }
 }

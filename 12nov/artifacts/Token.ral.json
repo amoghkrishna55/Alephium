@@ -1,14 +1,15 @@
 {
   "version": "v3.8.5",
   "name": "Token",
-  "bytecode": "050409121b4024010000000102ce0302010000000102ce0202010000000102ce0102010000000102ce0002",
-  "codeHash": "7a4d24d1145bc3158bd6b27d204be71a2f5b04b1cb4e3d737ed6252923208b0d",
+  "bytecode": "060609121b402440324054010000000102ce0302010000000102ce0202010000000102ce0102010000000102ce0002010000000103d323f4ce6aa00002010201010012d30fb898ce16000e320c7bb4b11600aba00016002ba10005b416005f",
+  "codeHash": "46d1f2c3211b9b589fb0af3ff35be905c97084982bbc586e143d5884b235f14e",
   "fieldsSig": {
     "names": [
       "supply",
       "decimals",
       "name",
       "symbol",
+      "balance",
       "__stdInterfaceId"
     ],
     "types": [
@@ -16,6 +17,7 @@
       "U256",
       "ByteVec",
       "ByteVec",
+      "U256",
       "ByteVec"
     ],
     "isMutable": [
@@ -23,10 +25,23 @@
       false,
       false,
       false,
+      true,
       false
     ]
   },
-  "eventsSig": [],
+  "eventsSig": [
+    {
+      "name": "Withdraw",
+      "fieldNames": [
+        "to",
+        "amount"
+      ],
+      "fieldTypes": [
+        "Address",
+        "U256"
+      ]
+    }
+  ],
   "functions": [
     {
       "name": "getSymbol",
@@ -63,9 +78,44 @@
       "returnTypes": [
         "U256"
       ]
+    },
+    {
+      "name": "balance",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "withdraw",
+      "paramNames": [
+        "amount"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
     }
   ],
   "constants": [],
-  "enums": [],
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "InvalidWithdrawAmount",
+          "value": {
+            "type": "U256",
+            "value": "0"
+          }
+        }
+      ]
+    }
+  ],
   "stdInterfaceId": "0001"
 }

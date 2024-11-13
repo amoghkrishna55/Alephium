@@ -43,9 +43,12 @@ export namespace TokenTypes {
     decimals: bigint;
     name: HexString;
     symbol: HexString;
+    balance: bigint;
   };
 
   export type State = ContractState<Fields>;
+
+  export type WithdrawEvent = ContractEvent<{ to: Address; amount: bigint }>;
 
   export interface CallMethodTable {
     getSymbol: {
@@ -63,6 +66,14 @@ export namespace TokenTypes {
     getTotalSupply: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
+    };
+    balance: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<bigint>;
+    };
+    withdraw: {
+      params: CallContractParams<{ amount: bigint }>;
+      result: CallContractResult<null>;
     };
   }
   export type CallMethodParams<T extends keyof CallMethodTable> =
@@ -98,6 +109,14 @@ export namespace TokenTypes {
       params: Omit<SignExecuteContractMethodParams<{}>, "args">;
       result: SignExecuteScriptTxResult;
     };
+    balance: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    withdraw: {
+      params: SignExecuteContractMethodParams<{ amount: bigint }>;
+      result: SignExecuteScriptTxResult;
+    };
   }
   export type SignExecuteMethodParams<T extends keyof SignExecuteMethodTable> =
     SignExecuteMethodTable[T]["params"];
@@ -113,6 +132,9 @@ class Factory extends ContractFactory<TokenInstance, TokenTypes.Fields> {
       []
     );
   }
+
+  eventIndex = { Withdraw: 0 };
+  consts = { ErrorCodes: { InvalidWithdrawAmount: BigInt("0") } };
 
   at(address: string): TokenInstance {
     return new TokenInstance(address);
@@ -151,6 +173,22 @@ class Factory extends ContractFactory<TokenInstance, TokenTypes.Fields> {
     ): Promise<TestContractResultWithoutMaps<bigint>> => {
       return testMethod(this, "getTotalSupply", params, getContractByCodeHash);
     },
+    balance: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<TokenTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
+      return testMethod(this, "balance", params, getContractByCodeHash);
+    },
+    withdraw: async (
+      params: TestContractParamsWithoutMaps<
+        TokenTypes.Fields,
+        { amount: bigint }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "withdraw", params, getContractByCodeHash);
+    },
   };
 
   stateForTest(initFields: TokenTypes.Fields, asset?: Asset, address?: string) {
@@ -162,8 +200,8 @@ class Factory extends ContractFactory<TokenInstance, TokenTypes.Fields> {
 export const Token = new Factory(
   Contract.fromJson(
     TokenContractJson,
-    "",
-    "7a4d24d1145bc3158bd6b27d204be71a2f5b04b1cb4e3d737ed6252923208b0d",
+    "=20-2+71=111-1+4=10+a0007e02175468652063757272656e742062616c616e63652069732000=46",
+    "b236af4a65fcb29c9a809222f1e7bdb4f1ec9d3fbd488c61a93b9d6160de40df",
     []
   )
 );
@@ -177,6 +215,23 @@ export class TokenInstance extends ContractInstance {
 
   async fetchState(): Promise<TokenTypes.State> {
     return fetchContractState(Token, this);
+  }
+
+  async getContractEventsCurrentCount(): Promise<number> {
+    return getContractEventsCurrentCount(this.address);
+  }
+
+  subscribeWithdrawEvent(
+    options: EventSubscribeOptions<TokenTypes.WithdrawEvent>,
+    fromCount?: number
+  ): EventSubscription {
+    return subscribeContractEvent(
+      Token.contract,
+      this,
+      options,
+      "Withdraw",
+      fromCount
+    );
   }
 
   view = {
@@ -224,6 +279,22 @@ export class TokenInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    balance: async (
+      params?: TokenTypes.CallMethodParams<"balance">
+    ): Promise<TokenTypes.CallMethodResult<"balance">> => {
+      return callMethod(
+        Token,
+        this,
+        "balance",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    withdraw: async (
+      params: TokenTypes.CallMethodParams<"withdraw">
+    ): Promise<TokenTypes.CallMethodResult<"withdraw">> => {
+      return callMethod(Token, this, "withdraw", params, getContractByCodeHash);
+    },
   };
 
   transact = {
@@ -246,6 +317,16 @@ export class TokenInstance extends ContractInstance {
       params: TokenTypes.SignExecuteMethodParams<"getTotalSupply">
     ): Promise<TokenTypes.SignExecuteMethodResult<"getTotalSupply">> => {
       return signExecuteMethod(Token, this, "getTotalSupply", params);
+    },
+    balance: async (
+      params: TokenTypes.SignExecuteMethodParams<"balance">
+    ): Promise<TokenTypes.SignExecuteMethodResult<"balance">> => {
+      return signExecuteMethod(Token, this, "balance", params);
+    },
+    withdraw: async (
+      params: TokenTypes.SignExecuteMethodParams<"withdraw">
+    ): Promise<TokenTypes.SignExecuteMethodResult<"withdraw">> => {
+      return signExecuteMethod(Token, this, "withdraw", params);
     },
   };
 
