@@ -19,9 +19,15 @@
     },
     "Token": {
       "sourceFile": "token.ral",
-      "sourceCodeHash": "b9fbe9584bba0414e4dca6ff152ad140b6edbfe936675f006b8861e9641e8e7a",
+      "sourceCodeHash": "b15cee598a86abd15674e7c046bf7920f02e210929717a862f178f05b54f80aa",
       "bytecodeDebugPatch": "=20-2+71=111-1+4=10+a0007e02175468652063757272656e742062616c616e63652069732000=46",
       "codeHashDebug": "b236af4a65fcb29c9a809222f1e7bdb4f1ec9d3fbd488c61a93b9d6160de40df"
+    },
+    "Withdraw": {
+      "sourceFile": "withdraw.ral",
+      "sourceCodeHash": "d65798169e3a8323a4d461b6e67c66beba6e5020d9df369920de5a7a2ecf4069",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": ""
     }
   }
 }
