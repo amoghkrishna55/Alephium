@@ -18,7 +18,7 @@ const deployFaucet: DeployFunction<Settings> = async (
     initialFields: {
       symbol: stringToHex('TF'),
       name: stringToHex('TokenFaucet'),
-      decimals: 18n,
+      decimals: 0n,
       supply: issueTokenAmount,
       balance: issueTokenAmount
     }
